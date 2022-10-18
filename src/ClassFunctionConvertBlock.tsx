@@ -1,12 +1,14 @@
 import React from 'react';
-import './css/fileUplaoder.scss';
+import './css/classFunctionConvertBlock.scss';
 
-const FileUploader = () => {
-  const [mapping, setMapping] = React.useState({});
+const ClassFunctionConvertBlock = () => {
+  const [mapping, setMapping] = React.useState(new Array());
   const [isDisplayResult, setIsDisplayResult] = React.useState(true);
 
-  const handleUpload = async (e: any) => {
-    const dataString = (await getDataString(e.target.files[0])) as string;
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target as HTMLInputElement;
+    if (!files || files.length === 0) return;
+    const dataString = (await getDataString(files[0])) as string;
 
     setMapping(getDisplayNameAndCodeMappingFromFile(dataString));
   };
@@ -65,27 +67,22 @@ const FileUploader = () => {
       {},
       ...codeArray.map((code, index) => ({ [code]: displayNameArray[index] }))
     );
-    return mapping;
-  };
-
-  const convertedToCodeBlock = (data: object | string) => {
-    let stringData = data as string;
-    if (typeof data !== 'string') stringData = JSON.stringify(data);
-    return stringData.split(',');
+    const mappingArray = JSON.stringify(mapping).split(',');
+    return mappingArray;
   };
 
   return (
     <>
-      請選擇 openApi .java config 檔案：
+      請選擇 openApi .java 設定檔案（功能類別為單位）：
       <input type="file" onChange={handleUpload} />
       <div>
-        轉換結果(欄位中英文 mapping):
+        轉換結果 (欄位中英文 mapping):
         <button onClick={() => setIsDisplayResult(!isDisplayResult)}>
-          toggle shrink
+          {`${isDisplayResult ? '隱藏' : '顯示'}`}
         </button>
       </div>
       <div className={`result__block ${!isDisplayResult ? 'hide' : 'display'}`}>
-        {convertedToCodeBlock(mapping)?.map((line) => {
+        {mapping?.map((line) => {
           return <div>{line}</div>;
         })}
       </div>
@@ -93,4 +90,4 @@ const FileUploader = () => {
   );
 };
 
-export default FileUploader;
+export default ClassFunctionConvertBlock;

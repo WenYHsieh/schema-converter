@@ -1,9 +1,9 @@
-import FileUploader from './FileUploader';
+import ClassFunctionConvertBlock from './ClassFunctionConvertBlock';
 
 function App() {
   return (
     <div className="App">
-      <FileUploader />
+      <ClassFunctionConvertBlock />
     </div>
   );
 }
