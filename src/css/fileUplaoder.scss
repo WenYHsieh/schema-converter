@@ -1,0 +1,18 @@
+.result__block {
+  border: 1px solid rgb(180, 130, 238);
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 16px 0;
+  height: 300px;
+  max-height: 500px;
+  overflow-y: auto;
+  resize: vertical;
+
+  &.hide {
+    display: none;
+  }
+
+  &.display {
+    display: block;
+  }
+}

@@ -1,8 +1,10 @@
 import React from 'react';
-import './css/fileUplaoder.css';
+import './css/fileUplaoder.scss';
 
 const FileUploader = () => {
   const [mapping, setMapping] = React.useState({});
+  const [isDisplayResult, setIsDisplayResult] = React.useState(true);
+
   const handleUpload = async (e: any) => {
     const dataString = (await getDataString(e.target.files[0])) as string;
 
@@ -76,8 +78,13 @@ const FileUploader = () => {
     <>
       請選擇 openApi .java config 檔案：
       <input type="file" onChange={handleUpload} />
-      <div className="result__block">
+      <div>
         轉換結果(欄位中英文 mapping):
+        <button onClick={() => setIsDisplayResult(!isDisplayResult)}>
+          toggle shrink
+        </button>
+      </div>
+      <div className={`result__block ${!isDisplayResult ? 'hide' : 'display'}`}>
         {convertedToCodeBlock(mapping)?.map((line) => {
           return <div>{line}</div>;
         })}
