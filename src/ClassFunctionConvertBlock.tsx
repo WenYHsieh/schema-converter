@@ -1,16 +1,19 @@
 import React from 'react';
-import './css/classFunctionConvertBlock.scss';
+import './css/converterBlock.scss';
+import ObjectUtils from './utils/objectUtils';
 
 const ClassFunctionConvertBlock = () => {
   const [mapping, setMapping] = React.useState(new Array());
-  const [isDisplayResult, setIsDisplayResult] = React.useState(true);
+  const [isDisplayResult, setIsDisplayResult] = React.useState(false);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target as HTMLInputElement;
     if (!files || files.length === 0) return;
     const dataString = (await getDataString(files[0])) as string;
 
-    setMapping(getDisplayNameAndCodeMappingFromFile(dataString));
+    const result = getDisplayNameAndCodeMappingFromFile(dataString);
+    setMapping(result);
+    if (ObjectUtils.isExist(result)) setIsDisplayResult(true);
   };
 
   const getDataString = (file: any) => {
@@ -73,6 +76,7 @@ const ClassFunctionConvertBlock = () => {
 
   return (
     <>
+      <h3>類別 Schema 轉換</h3>
       請選擇 openApi .java 設定檔案（功能類別為單位）：
       <input type="file" onChange={handleUpload} />
       <div>
