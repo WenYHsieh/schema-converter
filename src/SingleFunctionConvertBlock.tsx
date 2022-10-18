@@ -13,8 +13,13 @@ const SingleFunctionConvertBlock = () => {
     const lineArray = value.split('\n\n');
     lineArray.forEach((line) => {
       const [code, , displayName] = line.split(/[/\t | /\n]/);
-      codeNameMapping = Object.assign(codeNameMapping, { [code]: displayName });
-      requestFormatObject = Object.assign(requestFormatObject, { [code]: '' });
+      const convertedCode = code.replace('*', '');
+      codeNameMapping = Object.assign(codeNameMapping, {
+        [convertedCode]: displayName,
+      });
+      requestFormatObject = Object.assign(requestFormatObject, {
+        [convertedCode]: '',
+      });
     });
 
     setMapping(JSON.stringify(codeNameMapping));
