@@ -37,12 +37,12 @@ const SingleFunctionConvertBlock = () => {
 
   const getMDFormat = (originalString: string) => {
     const jsString = '```js\n' + originalString + '\n```';
-    const mdformat = jsString
+    const mdFormat = jsString
       .replace('{', '{\n\t')
       .replace('}', '\n}')
       .replaceAll(',', ',\n\t');
 
-    return mdformat;
+    return mdFormat;
   };
   return (
     <>
