@@ -1,6 +1,7 @@
 import React from 'react';
-import './css/converterBlock.scss';
-import ObjectUtils from './utils/objectUtils';
+import ObjectUtils from '../utils/objectUtils';
+import '../components/common/css/converterBlock.scss';
+import MarkDown from './common/MarkDown';
 
 const SingleFunctionConvertBlock = () => {
   const [mapping, setMapping] = React.useState('');
@@ -29,11 +30,20 @@ const SingleFunctionConvertBlock = () => {
       columns += `${ObjectUtils.isExist(columns) ? ',' : ''} ${convertedCode}`;
     });
 
-    setMapping(JSON.stringify(codeNameMapping));
-    setRequestFormat(JSON.stringify(requestFormatObject));
+    setMapping(getMDFormat(JSON.stringify(codeNameMapping)));
+    setRequestFormat(getMDFormat(JSON.stringify(requestFormatObject)));
     setColumnList(columns);
   };
 
+  const getMDFormat = (originalString: string) => {
+    const jsString = '```js\n' + originalString + '\n```';
+    const mdformat = jsString
+      .replace('{', '{\n\t')
+      .replace('}', '\n}')
+      .replaceAll(',', ',\n\t');
+
+    return mdformat;
+  };
   return (
     <>
       <h3>單支 Schema 轉換</h3>
@@ -41,11 +51,12 @@ const SingleFunctionConvertBlock = () => {
       <textarea rows={5} onChange={handleOnChange}></textarea>
       <div className="result__block">
         <div>轉換結果 (欄位中英文 mapping):</div>
-        <div>{mapping}</div>
+
+        <MarkDown source={mapping} />
       </div>
       <div className="result__block">
         <div>轉換結果 (request 格式):</div>
-        <div>{requestFormat}</div>
+        <MarkDown source={requestFormat} />
       </div>
       <div className="result__block">
         <div>轉換結果 (欄位 list):</div>

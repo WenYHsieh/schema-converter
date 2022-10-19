@@ -1,6 +1,6 @@
 import React from 'react';
-import './css/converterBlock.scss';
-import ObjectUtils from './utils/objectUtils';
+import '../components/common/css/converterBlock.scss';
+import ObjectUtils from '../utils/objectUtils';
 
 const ClassFunctionConvertBlock = () => {
   const [mapping, setMapping] = React.useState(new Array());
