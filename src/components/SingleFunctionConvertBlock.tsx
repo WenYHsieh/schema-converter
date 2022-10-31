@@ -18,7 +18,13 @@ const SingleFunctionConvertBlock = () => {
     const lineArray = value.split('\n\n');
 
     lineArray.forEach((line) => {
-      const [code, , displayName] = line.split(/[/\t | /\n]/);
+      const convertedLine = line
+        .replaceAll('\t', ',')
+        .replaceAll('\n', ',')
+        .replaceAll('\n\n', ',')
+        .split(',');
+      const code = convertedLine[0];
+      const displayName = convertedLine.slice(-1).pop();
       const convertedCode = code.replace('*', '');
       codeNameMapping = Object.assign(codeNameMapping, {
         [convertedCode]: displayName,
